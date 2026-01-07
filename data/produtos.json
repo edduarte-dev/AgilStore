@@ -2,8 +2,22 @@
   {
     "id": 1,
     "nome": "Mouse Gamer",
-    "categoria": "Acessórios",
+    "categoria": "Perifericos",
     "quantidade": 10,
-    "preco": 150
+    "preco": 100
+  },
+  {
+    "id": 2,
+    "nome": "Mouse Pad",
+    "categoria": "Acessorios",
+    "quantidade": 15,
+    "preco": 25
+  },
+  {
+    "id": 3,
+    "nome": "Teclado sem fio",
+    "categoria": "perifericos",
+    "quantidade": 25,
+    "preco": 119.99
   }
 ]

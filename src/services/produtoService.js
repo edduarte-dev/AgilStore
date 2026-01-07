@@ -1,4 +1,4 @@
-const { lerProdutos, salvarProdutos } = require("../utils/fileHandler");
+const { lerProdutos, salvarProdutos } = require('../utils/fileHandler');
 
 function gerarNovoId(produtos) {
   if (produtos.length === 0) {
@@ -30,8 +30,24 @@ function listarProdutos() {
   return lerProdutos();
 }
 
+function buscarProduto(termo) {
+  const produtos = lerProdutos();
+
+  const id = Number(termo);
+
+  // Busca por ID
+  if (!isNaN(id)) {
+    return produtos.find((produto) => produto.id === id);
+  }
+
+  // Busca por parte do nome (case-insensitive)
+  return produtos.filter((produto) =>
+    produto.nome.toLowerCase().includes(termo.toLowerCase())
+  );
+}
+
 module.exports = {
   adicionarProduto,
   listarProdutos,
+  buscarProduto,
 };
-
