@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": 1,
+    "nome": "Mouse Gamer",
+    "categoria": "Acessórios",
+    "quantidade": 10,
+    "preco": 150
+  }
+]
