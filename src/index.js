@@ -3,6 +3,8 @@ const {
   adicionarProduto,
   listarProdutos,
   buscarProduto,
+  atualizarProduto
+
 } = require("./services/produtoService");
 
 const rl = readline.createInterface({
@@ -23,7 +25,7 @@ function mostrarMenu() {
 }
 
 // ================= VALIDAÇÃO DE PREÇO =================
-// Aceita: 8999 | 8.999 | 8.999,99 | 8999,99 | 8999.99
+// Aceita: 0000 | 0.000 | 0.000,00 | 0000,00 | 0000.00
 
 function perguntarPrecoValido(callback) {
   rl.question("Preço (ex: 8999 | 8.999,99 | 8999.99): ", (entrada) => {
@@ -143,6 +145,56 @@ function buscarProdutoMenu() {
   });
 }
 
+function atualizarProdutoMenu() {
+  rl.question('Informe o ID do produto a ser atualizado: ', (idEntrada) => {
+    const id = Number(idEntrada);
+
+    if (isNaN(id)) {
+      console.log('\n❌ ID inválido.');
+      mostrarMenu();
+      perguntarOpcao();
+      return;
+    }
+
+    const produtoAtual = buscarProduto(id);
+
+    if (!produtoAtual) {
+      console.log('\n❌ Produto não encontrado.');
+      mostrarMenu();
+      perguntarOpcao();
+      return;
+    }
+
+    console.log('\nProduto atual:');
+    console.log(produtoAtual);
+
+    rl.question('Novo nome (pressione Enter para manter): ', (nome) => {
+      rl.question('Nova categoria (pressione Enter para manter): ', (categoria) => {
+        rl.question('Nova quantidade (pressione Enter para manter): ', (quantidade) => {
+          perguntarPrecoValido((preco) => {
+            const novosDados = {};
+
+            if (nome) novosDados.nome = nome;
+            if (categoria) novosDados.categoria = categoria;
+            if (quantidade) novosDados.quantidade = Number(quantidade);
+            if (preco) novosDados.preco = preco;
+
+            const produtoAtualizado = atualizarProduto(id, novosDados);
+
+            console.log('\n✅ Produto atualizado com sucesso!');
+            console.log(produtoAtualizado);
+
+            mostrarMenu();
+            perguntarOpcao();
+          });
+        });
+      });
+    });
+  });
+}
+
+
+
 // ================= CONTROLE DO MENU =================
 
 function perguntarOpcao() {
@@ -153,6 +205,9 @@ function perguntarOpcao() {
         break;
       case "2":
         listarProdutosMenu();
+        break;
+      case '3':
+        atualizarProdutoMenu();
         break;
       case "5":
         buscarProdutoMenu();

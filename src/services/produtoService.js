@@ -46,8 +46,31 @@ function buscarProduto(termo) {
   );
 }
 
+function atualizarProduto(id, novosDados) {
+  const produtos = lerProdutos();
+
+  const indice = produtos.findIndex(produto => produto.id === id);
+
+  if (indice === -1) {
+    return null;
+  }
+
+  produtos[indice] = {
+    ...produtos[indice],
+    ...novosDados
+  };
+
+  salvarProdutos(produtos);
+
+  return produtos[indice];
+}
+
+
+
+
 module.exports = {
   adicionarProduto,
   listarProdutos,
   buscarProduto,
+  atualizarProduto
 };

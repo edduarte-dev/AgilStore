@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
-    "nome": "Mouse Gamer",
+    "nome": "Mouse sem fio",
     "categoria": "Perifericos",
-    "quantidade": 10,
-    "preco": 100
+    "quantidade": 16,
+    "preco": 97.99
   },
   {
     "id": 2,
@@ -33,5 +33,12 @@
     "categoria": "Notebook",
     "quantidade": 15,
     "preco": 42403
+  },
+  {
+    "id": 6,
+    "nome": "Monitor Ultrawide LG 34\\ 144Hz",
+    "categoria": "Monitores",
+    "quantidade": 18,
+    "preco": 2799.99
   }
 ]
