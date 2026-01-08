@@ -3,8 +3,8 @@ const {
   adicionarProduto,
   listarProdutos,
   buscarProduto,
-  atualizarProduto
-
+  atualizarProduto,
+  excluirProduto,
 } = require("./services/produtoService");
 
 const rl = readline.createInterface({
@@ -144,13 +144,13 @@ function buscarProdutoMenu() {
     perguntarOpcao();
   });
 }
-
+// ================= ATUALIZAR PRODUTO =================
 function atualizarProdutoMenu() {
-  rl.question('Informe o ID do produto a ser atualizado: ', (idEntrada) => {
+  rl.question("Informe o ID do produto a ser atualizado: ", (idEntrada) => {
     const id = Number(idEntrada);
 
     if (isNaN(id)) {
-      console.log('\n❌ ID inválido.');
+      console.log("\n❌ ID inválido.");
       mostrarMenu();
       perguntarOpcao();
       return;
@@ -159,41 +159,88 @@ function atualizarProdutoMenu() {
     const produtoAtual = buscarProduto(id);
 
     if (!produtoAtual) {
-      console.log('\n❌ Produto não encontrado.');
+      console.log("\n❌ Produto não encontrado.");
       mostrarMenu();
       perguntarOpcao();
       return;
     }
 
-    console.log('\nProduto atual:');
+    console.log("\nProduto atual:");
     console.log(produtoAtual);
 
-    rl.question('Novo nome (pressione Enter para manter): ', (nome) => {
-      rl.question('Nova categoria (pressione Enter para manter): ', (categoria) => {
-        rl.question('Nova quantidade (pressione Enter para manter): ', (quantidade) => {
-          perguntarPrecoValido((preco) => {
-            const novosDados = {};
+    rl.question("Novo nome (pressione Enter para manter): ", (nome) => {
+      rl.question(
+        "Nova categoria (pressione Enter para manter): ",
+        (categoria) => {
+          rl.question(
+            "Nova quantidade (pressione Enter para manter): ",
+            (quantidade) => {
+              perguntarPrecoValido((preco) => {
+                const novosDados = {};
 
-            if (nome) novosDados.nome = nome;
-            if (categoria) novosDados.categoria = categoria;
-            if (quantidade) novosDados.quantidade = Number(quantidade);
-            if (preco) novosDados.preco = preco;
+                if (nome) novosDados.nome = nome;
+                if (categoria) novosDados.categoria = categoria;
+                if (quantidade) novosDados.quantidade = Number(quantidade);
+                if (preco) novosDados.preco = preco;
 
-            const produtoAtualizado = atualizarProduto(id, novosDados);
+                const produtoAtualizado = atualizarProduto(id, novosDados);
 
-            console.log('\n✅ Produto atualizado com sucesso!');
-            console.log(produtoAtualizado);
+                console.log("\n✅ Produto atualizado com sucesso!");
+                console.log(produtoAtualizado);
 
-            mostrarMenu();
-            perguntarOpcao();
-          });
-        });
-      });
+                mostrarMenu();
+                perguntarOpcao();
+              });
+            }
+          );
+        }
+      );
     });
   });
 }
 
+// ================= EXCLUIR PRODUTO =================
+function excluirProdutoMenu() {
+  rl.question("Informe o ID do produto a ser excluído: ", (idEntrada) => {
+    const id = Number(idEntrada);
 
+    if (isNaN(id)) {
+      console.log("\n❌ ID inválido.");
+      mostrarMenu();
+      perguntarOpcao();
+      return;
+    }
+
+    const produto = buscarProduto(id);
+
+    if (!produto) {
+      console.log("\n❌ Produto não encontrado.");
+      mostrarMenu();
+      perguntarOpcao();
+      return;
+    }
+
+    console.log("\nProduto encontrado:");
+    console.log(produto);
+
+    rl.question("\nTem certeza que deseja excluir? (s/n): ", (confirmacao) => {
+      if (confirmacao.toLowerCase() !== "s") {
+        console.log("\n❎ Exclusão cancelada.");
+        mostrarMenu();
+        perguntarOpcao();
+        return;
+      }
+
+      const removido = excluirProduto(id);
+
+      console.log("\n🗑️ Produto excluído com sucesso!");
+      console.log(removido);
+
+      mostrarMenu();
+      perguntarOpcao();
+    });
+  });
+}
 
 // ================= CONTROLE DO MENU =================
 
@@ -206,9 +253,13 @@ function perguntarOpcao() {
       case "2":
         listarProdutosMenu();
         break;
-      case '3':
+      case "3":
         atualizarProdutoMenu();
         break;
+      case "4":
+        excluirProdutoMenu();
+        break;
+
       case "5":
         buscarProdutoMenu();
         break;

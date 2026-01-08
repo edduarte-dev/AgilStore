@@ -65,6 +65,22 @@ function atualizarProduto(id, novosDados) {
   return produtos[indice];
 }
 
+function excluirProduto(id) {
+  const produtos = lerProdutos();
+
+  const indice = produtos.findIndex(produto => produto.id === id);
+
+  if (indice === -1) {
+    return null;
+  }
+
+  const [produtoRemovido] = produtos.splice(indice, 1);
+  salvarProdutos(produtos);
+
+  return produtoRemovido;
+}
+
+
 
 
 
@@ -72,5 +88,6 @@ module.exports = {
   adicionarProduto,
   listarProdutos,
   buscarProduto,
-  atualizarProduto
+  atualizarProduto,
+  excluirProduto
 };

@@ -1,12 +1,5 @@
 [
   {
-    "id": 1,
-    "nome": "Mouse sem fio",
-    "categoria": "Perifericos",
-    "quantidade": 16,
-    "preco": 97.99
-  },
-  {
     "id": 2,
     "nome": "Mouse Pad",
     "categoria": "Acessorios",
